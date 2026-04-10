@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+export function init() {
     // password addon
     Array.from(document.querySelectorAll("form .auth-pass-inputgroup")).forEach(function (item) {
         Array.from(item.querySelectorAll(".password-addon")).forEach(function (subitem) {
@@ -12,4 +12,4 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
-});
+}

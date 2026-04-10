@@ -40,5 +40,7 @@ class DatabaseSeeder extends Seeder
             'company' => 'Admin Company',
             'created_at' => now(),
         ]);
+
+        $this->call(RbacSeeder::class);
     }
 }

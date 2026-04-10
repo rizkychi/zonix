@@ -106,6 +106,3 @@
         <x-auth-footer />
     </div>
 @endsection
-@push('scripts')
-    @vite(['resources/js/pages/reset-password.js'])
-@endpush

@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\ResourceController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Authentication Routes
-include __DIR__.'/auth.php';
+include __DIR__ . '/auth.php';
 
 // Landing page route
 Route::get('/', function () {
@@ -16,11 +19,26 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'root'])->name('dashboard');
     Route::get('/dashboard/{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
-
-    // Admin
-    // Route::middleware('role:super-admin')->prefix('admin')->name('admin.')->group(function () {
-    //     Route::get('resources', [ResourceSyncController::class, 'index'])->name('resources.index');
-    //     Route::post('resources/sync', [ResourceSyncController::class, 'sync'])->name('resources.sync');
-    //     Route::patch('resources/{resource}/toggle', [ResourceSyncController::class, 'toggle'])->name('resources.toggle');
-    // });
 });
+
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth', 'role:super-admin']) // spatie middleware to restrict access to super-admins only
+    ->group(function () {
+
+        // Resource management
+        Route::get('resources', [ResourceController::class, 'index'])->name('resources.index');
+        Route::post('resources/sync', [ResourceController::class, 'sync'])->name('resources.sync');
+        Route::get('resources/data', [ResourceController::class, 'data'])->name('resources.data');
+        Route::patch('resources/{resource}/toggle', [ResourceController::class, 'toggle'])->name('resources.toggle');
+        Route::patch('resources/{resource}/group', [ResourceController::class, 'updateGroup'])->name('resources.group');
+
+        // Role management
+        Route::resource('roles', RoleController::class)->except(['show']);
+        Route::post('roles/{role}/permissions', [RoleController::class, 'syncPermissions'])->name('roles.permissions.sync');
+
+        // User management
+        Route::get('users', [UserController::class, 'index'])->name('users.index');
+        Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::patch('users/{user}', [UserController::class, 'update'])->name('users.update');
+    });

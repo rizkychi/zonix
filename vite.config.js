@@ -5,18 +5,22 @@ import fs from "fs-extra";
 
 export default defineConfig({
     build: {
-        manifest: true,
         outDir: "public/build",
         cssCodeSplit: true,
         rollupOptions: {
             output: {
                 assetFileNames: (asset) => {
-                    if (asset.name?.endsWith(".css")) return "css/[name].min.css";
-                    if (/\.(woff2?|ttf|eot|otf)$/.test(asset.name ?? "")) return "fonts/[name][extname]";
-                    if (/\.(png|jpe?g|gif|svg|webp|ico)$/.test(asset.name ?? "")) return "images/[name][extname]";
+                    if (asset.name?.endsWith(".css"))
+                        return "css/[name].min.css";
+                    if (/\.(woff2?|ttf|eot|otf)$/.test(asset.name ?? ""))
+                        return "fonts/[name][extname]";
+                    if (
+                        /\.(png|jpe?g|gif|svg|webp|ico)$/.test(asset.name ?? "")
+                    )
+                        return "images/[name][extname]";
                     return "assets/[name][extname]";
                 },
-                entryFileNames: "js/[name].js",
+                entryFileNames: "js/[name]-[hash].js",
                 chunkFileNames: "js/chunks/[name]-[hash].js",
             },
         },
@@ -55,9 +59,6 @@ export default defineConfig({
                 "resources/scss/custom.scss",
                 "resources/js/app.js",
                 "resources/js/app-auth.js",
-                "resources/js/pages/login.js",
-                "resources/js/pages/register.js",
-                "resources/js/pages/reset-password.js",
             ],
             refresh: [...refreshPaths, "resources/views/**"],
         }),
@@ -80,6 +81,20 @@ export default defineConfig({
                     ),
                 );
                 console.log("✅ Static assets copied to public/build/");
+            },
+        },
+        {
+            name: "fix-font-path",
+            configureServer(server) {
+                server.middlewares.use((req, res, next) => {
+                    if (req.url.startsWith("/resources/scss/fonts/")) {
+                        req.url = req.url.replace(
+                            "/resources/scss/fonts/",
+                            "/resources/fonts/",
+                        );
+                    }
+                    next();
+                });
             },
         },
     ],

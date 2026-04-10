@@ -10,16 +10,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 #[Fillable(['username', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
+#[Table(keyType: 'string', incrementing: false)]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasUuids;
-
-    protected $keyType = 'string';
-    public $incrementing = false;
+    use HasFactory, Notifiable, HasUuids, HasRoles;
 
     /**
      * Get the attributes that should be cast.

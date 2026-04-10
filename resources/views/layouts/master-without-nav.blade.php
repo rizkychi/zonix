@@ -13,8 +13,9 @@
     @include('layouts.head-css')
 </head>
 
-@yield('body')
-
+{{-- @yield('body') --}}
+<body data-page="{{ str_replace('.', '/', Route::currentRouteName() ?? '') }}">
+    
 @yield('content')
 
 @include('layouts.vendor-scripts')

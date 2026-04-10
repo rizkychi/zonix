@@ -14,8 +14,8 @@ import feather from 'feather-icons';
 import flatpickr from 'flatpickr';
 import Toastify from 'toastify-js';
 import Swal from 'sweetalert2';
-import './pages/plugin/particles.init.js';
-import './pages/plugin/lordicon.js';
+import './plugin/particles.init.js';
+import './plugin/lordicon.js';
 
 // ── CSS
 import 'toastify-js/src/toastify.css';
@@ -31,3 +31,18 @@ window.Swal      = Swal;
 // ── Init
 Waves.init();
 feather.replace();
+
+// ── Auto-import page-specific JS modules based on body data-page attribute
+const page = document.body.dataset.page
+const modules = import.meta.glob('./pages/**/*.js')
+
+if (page) {
+    const key = `./pages/${page}.js`
+
+    if (modules[key]) {
+        modules[key]()
+            .then(m => m.init?.())
+            .catch(err => console.warn(`[page-loader] failed to load "${key}":`, err))
+    }
+    // if no matching page module found, it's not necessarily an error, so we won't log anything.
+}

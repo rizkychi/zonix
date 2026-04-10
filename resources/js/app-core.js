@@ -7,6 +7,10 @@ Contact: Themesbrand@gmail.com
 File: Main Js File
 */
 
+import * as bootstrap from 'bootstrap'; 
+import Waves from 'node-waves';
+import feather from 'feather-icons';
+
 (function () {
     ("use strict");
 
