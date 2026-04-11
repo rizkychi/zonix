@@ -68,6 +68,7 @@
     ])
 
     @include('sweetalert2::index')
+    @include('components.swal-flash')
 </body>
 
 </html>

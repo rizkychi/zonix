@@ -19,6 +19,7 @@ class ResourceScanner
         'livewire.',
         'password.',
         'verification.',
+        'default-livewire.',
     ];
 
     protected array $skipExact = [

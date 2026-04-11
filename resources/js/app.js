@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 import Select2 from 'select2';
 import './plugin/lordicon.js';
 import './plugin/datatables.init.js';
+import { swal, toast } from './plugin/swal.init.js';
 
 // ── CSS Library Imports
 import 'choices.js/public/assets/styles/choices.css';
@@ -31,7 +32,9 @@ window.Choices    = Choices;
 window.flatpickr  = flatpickr;
 window.Toastify   = Toastify;
 window.Swal       = Swal;
-window.Select2     = Select2;
+window.Select2    = Select2;
+window.swal       = swal;
+window.toast      = toast;
 
 // ── Init
 Waves.init();

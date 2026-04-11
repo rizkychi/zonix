@@ -8,14 +8,13 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
+use SweetAlert2\Laravel\Swal;
 
 class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::with('permissions')->withCount('users')->get();
-
-        return view('admin.roles.index', compact('roles'));
+        return view('admin.roles.index');
     }
 
     public function create()
@@ -66,11 +65,32 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         if (in_array($role->name, ['super-admin'])) {
-            return back()->with('error', __('This role cannot be deleted.'));
+            return redirect()->back()->with('error', __('The super-admin role cannot be deleted.'));
         }
 
         $role->delete();
 
-        return redirect()->route('admin.roles.index')->with('success', __('Role deleted.'));
+        return redirect()->route('admin.roles.index')->with('success', __('Role deleted successfully.'));
+    }
+
+    public function data(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Role::withCount('permissions')->withCount('users')->get();
+
+            return datatables()->of($data)
+                ->addIndexColumn()
+                ->addColumn('actions', function ($role) {
+                    if (in_array($role->name, ['super-admin'])) {
+                        $buttons = zx_button_icon(route('admin.roles.edit', $role), 'bx bxs-pencil', 'warning', __('Edit'));
+                        $buttons .= zx_delete_confirm(route('admin.roles.destroy', $role));
+                    } else {
+                        $buttons = '<span class="text-muted">-</span>';
+                    }
+                    return $buttons;
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
     }
 }

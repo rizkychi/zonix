@@ -11,9 +11,10 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ResourceController extends Controller
 {
-    public function __construct(protected ResourceScanner $scanner){}
+    public function __construct(protected ResourceScanner $scanner) {}
 
-    public function index() {
+    public function index()
+    {
         $resources = Resource::orderBy('group')
             ->orderBy('controller_action')
             ->get()
@@ -26,20 +27,15 @@ class ResourceController extends Controller
     {
         $result = $this->scanner->sync();
 
-        Swal::toastSuccess([
-            'title' => __('Resources synchronized successfully.'),
-            'position' => 'top-end',
-            'showConfirmButton' => false,
-            'timer' => 3000,
-        ]);
-
         $text = '<strong>' . __('Sync Results') . ':</strong> ' . __(':created new, :updated updated, :deleted deleted.', [
             'created' => $result['created'],
             'updated' => $result['updated'],
             'deleted' => $result['deleted'],
         ]);
 
-        return redirect()->back()->with('success', $text);
+        return redirect()->back()
+            ->with('success', __('Resources synchronized successfully.'))
+            ->with('sync_result', $text);
     }
 
     public function toggle(Resource $resource)

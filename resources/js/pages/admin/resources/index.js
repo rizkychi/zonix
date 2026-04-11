@@ -17,35 +17,16 @@ export function init() {
                 is_active: isActive,
             },
             success: function (response) {
-                console.log(response);
-                var Sw = Swal.mixin({
-                    text: response.message,
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                });
                 if (response.is_active) {
-                    Sw.fire({
-                        icon: "success",
-                    });
+                    toast.success(response.message);
                 } else {
-                    Sw.fire({
-                        icon: "error",
-                    });
+                    toast.error(response.message);
                 }
                 $toggle.prop("disabled", false); // Re-enable the toggle
             },
             error: function (xhr) {
                 $toggle.prop("disabled", false); // Re-enable the toggle
-                Swal.fire({
-                    icon: "warning",
-                    text: "Failed to update status. Please try again.",
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                });
+                toast.error('An error occurred while updating the resource status.');
             },
         });
     });

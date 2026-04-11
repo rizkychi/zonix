@@ -12,9 +12,9 @@
         @endslot
     @endcomponent
 
-    @if (session('success'))
+    @if (session('sync_result'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {!! session('success') !!}
+            {!! session('sync_result') !!}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
@@ -41,12 +41,12 @@
                     </p>
 
                     <x-data-table id="resources-table" class="table-sm" :columns="[
-                        ['data' => 'name', 'title' => 'Route Name / Permission'],
-                        ['data' => 'uri', 'title' => 'URI'],
-                        ['data' => 'http_method', 'title' => 'Method'],
-                        ['data' => 'controller_action', 'title' => 'Action'],
-                        ['data' => 'group', 'title' => 'Group'],
-                        ['data' => 'is_active', 'title' => 'Status', 'orderable' => false, 'searchable' => false],
+                        ['data' => 'name', 'title' => __('Route Name / Permission')],
+                        ['data' => 'uri', 'title' => __('URI')],
+                        ['data' => 'http_method', 'title' => __('Method')],
+                        ['data' => 'controller_action', 'title' => __('Action')],
+                        ['data' => 'group', 'title' => __('Group')],
+                        ['data' => 'is_active', 'title' => __('Status'), 'orderable' => false, 'searchable' => false],
                     ]"
                         ajax="{{ route('admin.resources.data') }}" />
                 </div><!-- end card-body -->
