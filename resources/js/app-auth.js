@@ -1,9 +1,5 @@
 import './bootstrap';
-
-import.meta.glob([
-    '../images/**',
-    '../fonts/**',
-]);
+import './assets';
 
 // ── Core UI
 import * as bootstrap from 'bootstrap';

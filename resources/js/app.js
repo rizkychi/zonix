@@ -1,5 +1,6 @@
 import './bootstrap';
 import './layout';
+import './assets';
 import './app-core';
 
 // ── Core UI

@@ -10,6 +10,7 @@ File: Main Js File
 import * as bootstrap from 'bootstrap'; 
 import Waves from 'node-waves';
 import feather from 'feather-icons';
+import flatpickr from 'flatpickr';
 
 (function () {
     ("use strict");
