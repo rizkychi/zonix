@@ -65,7 +65,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         if (in_array($role->name, ['super-admin'])) {
-            return redirect()->back()->with('error', __('The super-admin role cannot be deleted.'));
+            return redirect()->back()->with('swal_custom_error', __('The super-admin role cannot be deleted.'));
         }
 
         $role->delete();

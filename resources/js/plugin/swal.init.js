@@ -1,7 +1,8 @@
 import Swal from "sweetalert2";
 
-const confirmBtnClass = "btn btn-primary w-xs";
-const cancelBtnClass = "btn btn-danger w-xs ms-2";
+const confirmBtnClass = "btn btn-danger w-xs";
+const cancelBtnClass = "btn btn-light w-xs ms-2";
+const primaryBtnClass = "btn btn-primary w-xs";
 
 // ─── Toast Mixin ──────────────────────────────────────────
 const ToastMixin = Swal.mixin({
@@ -25,7 +26,7 @@ export const swal = {
             icon: "success",
             title,
             text,
-            confirmButtonClass: swal.confirmBtnClass,
+            customClass: { confirmButton: primaryBtnClass },
             buttonsStyling: false,
         }),
     error: (title, text = "") =>
@@ -33,7 +34,7 @@ export const swal = {
             icon: "error",
             title,
             text,
-            confirmButtonClass: swal.confirmBtnClass,
+            customClass: { confirmButton: primaryBtnClass },
             buttonsStyling: false,
         }),
     warning: (title, text = "") =>
@@ -41,7 +42,7 @@ export const swal = {
             icon: "warning",
             title,
             text,
-            confirmButtonClass: swal.confirmBtnClass,
+            customClass: { confirmButton: primaryBtnClass },
             buttonsStyling: false,
         }),
     info: (title, text = "") =>
@@ -49,7 +50,7 @@ export const swal = {
             icon: "info",
             title,
             text,
-            confirmButtonClass: swal.confirmBtnClass,
+            customClass: { confirmButton: primaryBtnClass },
             buttonsStyling: false,
         }),
 
@@ -65,6 +66,38 @@ export const swal = {
                 confirmButton: confirmBtnClass,
                 cancelButton: cancelBtnClass,
             },
+            buttonsStyling: false,
+        }),
+    custom_success: (title, text = "", cancelButtonText = "Back") =>
+        Swal.fire({
+             html: '<div class="mt-3">' +
+                '<lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop" colors="primary:#0ab39c,secondary:#405189" style="width:120px;height:120px"></lord-icon>' +
+                '<div class="mt-4 pt-2 fs-15">' +
+                '<h4>' + title + '</h4>' +
+                '<p class="text-muted mx-4 mb-0">' + text + '</p>' +
+                '</div>' +
+                '</div>',
+            showCancelButton: true,
+            showConfirmButton: false,
+            cancelButtonText: cancelButtonText,
+            showCloseButton: true,
+            customClass: { cancelButton: primaryBtnClass },
+            buttonsStyling: false,
+        }),
+    custom_error: (title, text = "", cancelButtonText = "Dismiss") =>
+        Swal.fire({
+             html: '<div class="mt-3">' +
+                '<lord-icon src="https://cdn.lordicon.com/tdrtiskw.json" trigger="loop" colors="primary:#f06548,secondary:#f7b84b" style="width:120px;height:120px"></lord-icon>' +
+                '<div class="mt-4 pt-2 fs-15">' +
+                '<h4>' + title + '</h4>' +
+                '<p class="text-muted mx-4 mb-0">' + text + '</p>' +
+                '</div>' +
+                '</div>',
+            showCancelButton: true,
+            showConfirmButton: false,
+            cancelButtonText: cancelButtonText,
+            showCloseButton: true,
+            customClass: { cancelButton: primaryBtnClass },
             buttonsStyling: false,
         }),
 };

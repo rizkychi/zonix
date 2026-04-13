@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import laravel, { refreshPaths } from "laravel-vite-plugin";
 import path from "path";
-import fs from "fs-extra";
 
 export default defineConfig({
     build: {
@@ -41,6 +40,7 @@ export default defineConfig({
     resolve: {
         alias: {
             "@fonts": path.resolve(__dirname, "resources/fonts"),
+            "@images": path.resolve(__dirname, "resources/images"),
         },
     },
     plugins: [
