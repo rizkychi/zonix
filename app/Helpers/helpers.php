@@ -9,6 +9,13 @@ if (!function_exists('zx_button_icon')) {
     }
 }
 
+if (!function_exists('zx_button_edit')) {
+    function zx_button_edit($url, $icon = 'bx bxs-pencil', $tooltip = null, $size = 'sm')
+    {
+        return zx_button_icon($url, $icon, 'warning', $tooltip ?? __('Edit'), $size);
+    }
+}
+
 if (!function_exists('zx_delete_confirm')) {
     function zx_delete_confirm($url, $tooltip = null, $confirm_title = null, $confirm_text = null, $confirm_ok = null, $confirm_cancel = null, $size = 'sm')
     {

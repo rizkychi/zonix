@@ -18,6 +18,7 @@ import Select2 from 'select2';
 import './plugin/lordicon.js';
 import './plugin/datatables.init.js';
 import { swal, toast } from './plugin/swal.init.js';
+import './plugin/form-validation.init.js';
 
 // ── CSS Library Imports
 import 'choices.js/public/assets/styles/choices.css';

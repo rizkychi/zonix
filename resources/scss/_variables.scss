@@ -844,7 +844,7 @@ $table-variants: (
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
 
 // scss-docs-start input-btn-variables
-$input-btn-padding-y:         .5rem;
+$input-btn-padding-y:         .375rem;//.5rem;
 $input-btn-padding-x:         .9rem;
 $input-btn-font-family:       null;
 $input-btn-font-size:         $font-size-base;

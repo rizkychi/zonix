@@ -6,16 +6,16 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ButtonIcon extends Component
+class ButtonForm extends Component
 {
-    public $el, $type, $variant, $size, $icon;
+    public $form, $backUrl, $variant, $size, $icon;
     /**
      * Create a new component instance.
      */
-    public function __construct($el = 'button', $type = 'button', $variant = 'primary', $size = 'md', $icon = null)
+    public function __construct($form, $backUrl = null, $variant = 'success', $size = 'md', $icon = 'ri-save-2-fill')
     {
-        $this->el = $el;
-        $this->type = $type;
+        $this->form = $form;
+        $this->backUrl = $backUrl ?? url()->previous();
         $this->variant = $variant;
         $this->size = $size;
         $this->icon = $icon;
@@ -26,6 +26,6 @@ class ButtonIcon extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.button-icon');
+        return view('components.button-form');
     }
 }

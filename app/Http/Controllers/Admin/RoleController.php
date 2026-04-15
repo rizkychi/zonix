@@ -19,7 +19,7 @@ class RoleController extends Controller
 
     public function create()
     {
-        return view('admin.roles.create');
+        return view('admin.roles.form');
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class RoleController extends Controller
         $resources        = Resource::orderBy('group')->orderBy('controller_action')->get()->groupBy('group');
         $rolePermissions  = $role->permissions->pluck('name')->toArray();
 
-        return view('admin.roles.edit', compact('role', 'resources', 'rolePermissions'));
+        return view('admin.roles.form', compact('role', 'resources', 'rolePermissions'));
     }
 
     public function update(Request $request, Role $role)
@@ -45,7 +45,7 @@ class RoleController extends Controller
 
         $role->update(['name' => $request->name]);
 
-        return back()->with('success', __('Role updated successfully.'));
+        return redirect()->route('admin.roles.index')->with('success', __('Role updated successfully.'));
     }
 
     public function syncPermissions(Request $request, Role $role)
@@ -81,8 +81,8 @@ class RoleController extends Controller
             return datatables()->of($data)
                 ->addIndexColumn()
                 ->addColumn('actions', function ($role) {
-                    if (in_array($role->name, ['super-admin'])) {
-                        $buttons = zx_button_icon(route('admin.roles.edit', $role), 'bx bxs-pencil', 'warning', __('Edit'));
+                    if (!in_array($role->name, ['super-admin'])) {
+                        $buttons = zx_button_edit(route('admin.roles.edit', $role));
                         $buttons .= zx_delete_confirm(route('admin.roles.destroy', $role));
                     } else {
                         $buttons = '<span class="text-muted">-</span>';
