@@ -12,8 +12,27 @@ use SweetAlert2\Laravel\Swal;
 
 class RoleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $data = Role::select('id', 'name')->orderBy('id')->withCount('permissions')->withCount('users')->get();
+
+            return datatables()->of($data)
+                ->addIndexColumn()
+                ->addColumn('actions', function ($role) {
+                    if (!in_array($role->name, ['super-admin'])) {
+                        $buttons = zx_button_edit(route('admin.roles.edit', $role));
+                        $buttons .= zx_delete_confirm(route('admin.roles.destroy', $role));
+                    } else {
+                        $buttons = zx_button_edit('#', false);
+                        $buttons .= zx_button_icon('#', false, 'bx bxs-trash', 'danger', __('Delete'));
+                    }
+                    return $buttons;
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+
         return view('admin.roles.index');
     }
 
@@ -71,26 +90,5 @@ class RoleController extends Controller
         $role->delete();
 
         return redirect()->route('admin.roles.index')->with('success', __('Role deleted successfully.'));
-    }
-
-    public function data(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = Role::withCount('permissions')->withCount('users')->get();
-
-            return datatables()->of($data)
-                ->addIndexColumn()
-                ->addColumn('actions', function ($role) {
-                    if (!in_array($role->name, ['super-admin'])) {
-                        $buttons = zx_button_edit(route('admin.roles.edit', $role));
-                        $buttons .= zx_delete_confirm(route('admin.roles.destroy', $role));
-                    } else {
-                        $buttons = '<span class="text-muted">-</span>';
-                    }
-                    return $buttons;
-                })
-                ->rawColumns(['actions'])
-                ->make(true);
-        }
     }
 }

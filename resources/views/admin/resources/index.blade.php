@@ -48,7 +48,7 @@
                         ['data' => 'group', 'title' => __('Group')],
                         ['data' => 'is_active', 'title' => __('Status'), 'orderable' => false, 'searchable' => false],
                     ]"
-                        ajax="{{ route('admin.resources.data') }}" />
+                        ajax="{{ route('admin.resources.index') }}" />
                 </div><!-- end card-body -->
 
             </div><!-- end card -->

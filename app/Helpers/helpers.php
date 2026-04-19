@@ -1,18 +1,19 @@
 <?php
 
 if (!function_exists('zx_button_icon')) {
-    function zx_button_icon($url, $icon, $type = 'primary', $tooltip = null, $size = 'sm')
+    function zx_button_icon($url, $enable = true, $icon, $type = 'primary', $tooltip = null, $size = 'sm')
     {
         $title = $tooltip ? ' title="' . $tooltip . '"' : '';
         $iconHtml = '<i class="' . $icon . ' fs-6"></i>';
-        return '<a href="' . $url . '" class="btn btn-' . $size . ' btn-' . $type . ' btn-icon waves-effect waves-light"' . $title . '>' . $iconHtml . '</a>';
+        $disabledClass = $enable ? '' : ' disabled';
+        return '<a href="' . $url . '" class="btn btn-' . $size . ' btn-' . $type . ' btn-icon waves-effect waves-light ' . $disabledClass . '"' . $title . '>' . $iconHtml . '</a>';
     }
 }
 
 if (!function_exists('zx_button_edit')) {
-    function zx_button_edit($url, $icon = 'bx bxs-pencil', $tooltip = null, $size = 'sm')
+    function zx_button_edit($url, $enable = true, $icon = 'bx bxs-pencil', $tooltip = null, $size = 'sm')
     {
-        return zx_button_icon($url, $icon, 'warning', $tooltip ?? __('Edit'), $size);
+        return zx_button_icon($url, $enable, $icon, 'warning', $tooltip ?? __('Edit'), $size);
     }
 }
 

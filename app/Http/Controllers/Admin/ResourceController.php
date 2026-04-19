@@ -13,14 +13,26 @@ class ResourceController extends Controller
 {
     public function __construct(protected ResourceScanner $scanner) {}
 
-    public function index()
+    public function index(Request $request)
     {
-        $resources = Resource::orderBy('group')
-            ->orderBy('controller_action')
-            ->get()
-            ->groupBy('group');
+        if ($request->ajax()) {
+            $data = Resource::orderBy('group')
+                ->orderBy('controller_action')
+                ->get();
 
-        return view('admin.resources.index', compact('resources'));
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('is_active', function ($resource) {
+                    $el = '<div class="form-check form-switch form-switch-success">
+                                <input class="form-check-input toggle-active" type="checkbox" role="switch" data-id="' . $resource->id . '" ' . ($resource->is_active ? 'checked' : '') . '>
+                            </div>';
+                    return $el;
+                })
+                ->rawColumns(['is_active'])
+                ->make(true);
+        }
+        
+        return view('admin.resources.index');
     }
 
     public function sync()
@@ -57,25 +69,5 @@ class ResourceController extends Controller
         Resource::clearCache();
 
         return response()->json(['group' => $resource->group]);
-    }
-
-    public function data(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = Resource::orderBy('group')
-                ->orderBy('controller_action')
-                ->get();
-
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('is_active', function ($resource) {
-                    $el = '<div class="form-check form-switch form-switch-success">
-                                <input class="form-check-input toggle-active" type="checkbox" role="switch" data-id="' . $resource->id . '" ' . ($resource->is_active ? 'checked' : '') . '>
-                            </div>';
-                    return $el;
-                })
-                ->rawColumns(['is_active'])
-                ->make(true);
-        }
     }
 }

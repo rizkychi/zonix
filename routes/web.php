@@ -29,14 +29,12 @@ Route::prefix('admin')
         // Resource management
         Route::get('resources', [ResourceController::class, 'index'])->name('resources.index');
         Route::post('resources/sync', [ResourceController::class, 'sync'])->name('resources.sync');
-        Route::get('resources/data', [ResourceController::class, 'data'])->name('resources.data');
         Route::patch('resources/{resource}/toggle', [ResourceController::class, 'toggle'])->name('resources.toggle');
         Route::patch('resources/{resource}/group', [ResourceController::class, 'updateGroup'])->name('resources.group');
 
         // Role management
         Route::resource('roles', RoleController::class)->except(['show']);
         Route::post('roles/{role}/permissions', [RoleController::class, 'syncPermissions'])->name('roles.permissions.sync');
-        Route::get('roles/data', [RoleController::class, 'data'])->name('roles.data');
 
         // User management
         Route::get('users', [UserController::class, 'index'])->name('users.index');

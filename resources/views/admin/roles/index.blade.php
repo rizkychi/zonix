@@ -37,7 +37,7 @@
                         ['data' => 'users_count', 'title' => __('Total Users')],
                         ['data' => 'actions', 'title' => __('Actions'), 'orderable' => false, 'searchable' => false],
                     ]"
-                        ajax="{{ route('admin.roles.data') }}" />
+                        ajax="{{ route('admin.roles.index') }}" />
                 </div><!-- end card-body -->
 
             </div><!-- end card -->
