@@ -1,7 +1,7 @@
 <?php
 
 if (!function_exists('zx_button_icon')) {
-    function zx_button_icon($url, $enable = true, $icon, $type = 'primary', $tooltip = null, $size = 'sm')
+    function zx_button_icon($url, $enable = true, $icon = 'bx-bxs-pencil', $type = 'primary', $tooltip = null, $size = 'sm')
     {
         $title = $tooltip ? ' title="' . $tooltip . '"' : '';
         $iconHtml = '<i class="' . $icon . ' fs-6"></i>';
@@ -27,17 +27,43 @@ if (!function_exists('zx_delete_confirm')) {
         $confirm_cancel = $confirm_cancel ?? __('Cancel');
 
         $el = '<form action="' . $url . '" method="POST">' .
-                csrf_field() . method_field('DELETE') .
-                '<button type="button"' .
-                    'data-confirm="' . $confirm_title . '"' .
-                    'data-confirm-text="' . $confirm_text . '"' .
-                    'data-confirm-ok="' . $confirm_ok . '"' .
-                    'data-confirm-cancel="' . $confirm_cancel . '"' .
-                    'class="btn btn-' . $size . ' btn-danger btn-icon waves-effect waves-light"' .
-                    'title="' . $title . '">' .
-                    '<i class="bx bxs-trash fs-6"></i>' .
-                '</button>' .
+            csrf_field() . method_field('DELETE') .
+            '<button type="button"' .
+            'data-confirm="' . $confirm_title . '"' .
+            'data-confirm-text="' . $confirm_text . '"' .
+            'data-confirm-ok="' . $confirm_ok . '"' .
+            'data-confirm-cancel="' . $confirm_cancel . '"' .
+            'class="btn btn-' . $size . ' btn-danger btn-icon waves-effect waves-light"' .
+            'title="' . $title . '">' .
+            '<i class="bx bxs-trash fs-6"></i>' .
+            '</button>' .
             '</form>';
         return $el;
+    }
+}
+
+if (!function_exists('zx_permission_name')) {
+    function zx_permission_name($group, $permission)
+    {
+        $group = strtolower($group) . 's';
+
+        $replacements = [
+            '.'        => ' ',
+            'admin '   => '',
+            $group . ' ' => '',
+            '_'        => ' ',
+            // 'index'    => 'view',
+            // 'destroy'  => 'delete',
+            // 'edit'     => 'Form Edit',
+            // 'create'   => 'Form Create',
+        ];
+
+        $result = str_replace(
+            array_keys($replacements),
+            array_values($replacements),
+            $permission
+        );
+
+        return Str::of($result)->title();
     }
 }

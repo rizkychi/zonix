@@ -34,6 +34,7 @@ Route::prefix('admin')
 
         // Role management
         Route::resource('roles', RoleController::class)->except(['show']);
+        Route::get('roles/{role}/permissions', [RoleController::class, 'editPermissions'])->name('roles.permissions.edit');
         Route::post('roles/{role}/permissions', [RoleController::class, 'syncPermissions'])->name('roles.permissions.sync');
 
         // User management

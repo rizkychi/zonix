@@ -21,10 +21,12 @@ class RoleController extends Controller
                 ->addIndexColumn()
                 ->addColumn('actions', function ($role) {
                     if (!in_array($role->name, ['super-admin'])) {
-                        $buttons = zx_button_edit(route('admin.roles.edit', $role));
+                        $buttons = zx_button_icon(route('admin.roles.permissions.edit', $role), true, 'bx bxs-shield-alt-2', 'info', __('Permissions'));
+                        $buttons .= zx_button_edit(route('admin.roles.edit', $role));
                         $buttons .= zx_delete_confirm(route('admin.roles.destroy', $role));
                     } else {
-                        $buttons = zx_button_edit('#', false);
+                        $buttons = zx_button_icon('#', false, 'bx bxs-shield-alt-2', 'info', __('Permissions'));
+                        $buttons .= zx_button_edit('#', false);
                         $buttons .= zx_button_icon('#', false, 'bx bxs-trash', 'danger', __('Delete'));
                     }
                     return $buttons;
@@ -67,6 +69,29 @@ class RoleController extends Controller
         return redirect()->route('admin.roles.index')->with('success', __('Role updated successfully.'));
     }
 
+    public function editPermissions(Role $role)
+    {
+        $resources = Resource::orderBy('group')
+            ->orderByRaw("
+                CASE controller_action
+                    WHEN 'index' THEN 1
+                    WHEN 'create' THEN 2
+                    WHEN 'store' THEN 3
+                    WHEN 'edit' THEN 4
+                    WHEN 'update' THEN 5
+                    WHEN 'destroy' THEN 6
+                    ELSE 999
+                END
+            ")
+            ->orderBy('controller_action')
+            ->get()
+            ->groupBy('group');
+
+        $rolePermissions = $role->permissions->pluck('name')->toArray();
+
+        return view('admin.roles.permissions', compact('role', 'resources', 'rolePermissions'));
+    }
+
     public function syncPermissions(Request $request, Role $role)
     {
         $permissions = $request->input('permissions', []);
@@ -78,7 +103,8 @@ class RoleController extends Controller
         // Flush spatie cache
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        return back()->with('success', __('Permissions synchronized successfully.'));
+        // return back()->with('success', __('Permissions synchronized successfully.'));
+        return redirect()->route('admin.roles.index')->with('success', __('Permissions synchronized successfully.'));
     }
 
     public function destroy(Role $role)
