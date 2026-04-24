@@ -11,6 +11,7 @@ import * as bootstrap from 'bootstrap';
 import Waves from 'node-waves';
 import feather from 'feather-icons';
 import flatpickr from 'flatpickr';
+import Choices from 'choices.js';
 
 (function () {
     ("use strict");
@@ -184,7 +185,9 @@ import flatpickr from 'flatpickr';
             if (isChoicesVal["data-choices-text-disabled-true"]) {
                 choiceData.addItems = false;
             }
-            isChoicesVal["data-choices-text-disabled-true"] ? new Choices(item, choiceData).disable() : new Choices(item, choiceData);
+            isChoicesVal["data-choices-text-disabled-true"]
+            ? item._choices = new Choices(item, choiceData).disable()
+            : item._choices = new Choices(item, choiceData);
         });
 
         /**

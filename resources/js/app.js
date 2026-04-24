@@ -21,7 +21,6 @@ import { swal, toast } from './plugin/swal.init.js';
 import './plugin/form-validation.init.js';
 
 // ── CSS Library Imports
-import 'choices.js/public/assets/styles/choices.css';
 import 'toastify-js/src/toastify.css';
 import 'select2/dist/css/select2.min.css';
 

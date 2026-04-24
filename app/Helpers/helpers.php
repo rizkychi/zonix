@@ -1,7 +1,7 @@
 <?php
 
 if (!function_exists('zx_button_icon')) {
-    function zx_button_icon($url, $enable = true, $icon = 'bx-bxs-pencil', $type = 'primary', $tooltip = null, $size = 'sm')
+    function zx_button_icon($url, $enable = true, $icon = 'bx bxs-pencil', $type = 'primary', $tooltip = null, $size = 'sm')
     {
         $title = $tooltip ? ' title="' . $tooltip . '"' : '';
         $iconHtml = '<i class="' . $icon . ' fs-6"></i>';

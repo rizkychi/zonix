@@ -37,8 +37,7 @@ Route::prefix('admin')
         Route::get('roles/{role}/permissions', [RoleController::class, 'editPermissions'])->name('roles.permissions.edit');
         Route::post('roles/{role}/permissions', [RoleController::class, 'syncPermissions'])->name('roles.permissions.sync');
 
-        // User management
-        Route::get('users', [UserController::class, 'index'])->name('users.index');
-        Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-        Route::patch('users/{user}', [UserController::class, 'update'])->name('users.update');
+        // User Role management
+        Route::get('user-roles', [UserController::class, 'index'])->name('user-roles.index');
+        Route::patch('user-roles/{user}', [UserController::class, 'update'])->name('user-roles.update');
     });
