@@ -3,14 +3,11 @@
     {{ __('Permissions') }}
 @endsection
 @section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
-            {{ __('Admin') }}
-        @endslot
-        @slot('title')
-            {{ __('Permissions') }}
-        @endslot
-    @endcomponent
+    <x-breadcrumb :items="[
+        ['label' => __('Admin')],
+        ['label' => __('Roles'), 'url' => route('admin.roles.index')],
+        ['label' => __('Permissions')],
+    ]"/>
 
     <div class="row">
         <div class="col-xl-12">

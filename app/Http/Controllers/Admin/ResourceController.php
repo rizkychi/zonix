@@ -31,7 +31,7 @@ class ResourceController extends Controller
                 ->rawColumns(['is_active'])
                 ->make(true);
         }
-        
+
         return view('admin.resources.index');
     }
 
@@ -52,13 +52,22 @@ class ResourceController extends Controller
 
     public function toggle(Resource $resource)
     {
-        $resource->update(['is_active' => !$resource->is_active]);
-        Resource::clearCache();
+        try {
+            $resource->update(['is_active' => !$resource->is_active]);
+            Resource::clearCache();
 
-        return response()->json([
-            'is_active' => $resource->is_active,
-            'message'   => $resource->is_active ? __('Resource enabled.') : __('Resource disabled.'),
-        ]);
+            return response()->json([
+                'status'    => 'success',
+                'is_active' => $resource->is_active,
+                'message'   => $resource->is_active ? __('Resource enabled.') : __('Resource disabled.'),
+            ], 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                'status' => 'error',
+                'message' => __('An error occurred while updating the resource status.'),
+            ], 500);
+        }
     }
 
     public function updateGroup(Request $request, Resource $resource)

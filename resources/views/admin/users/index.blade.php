@@ -1,16 +1,12 @@
 @extends('layouts.master')
 @section('title')
-    {{ __('Roles') }}
+    {{ __('User Roles') }}
 @endsection
 @section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
-            {{ __('Admin') }}
-        @endslot
-        @slot('title')
-            {{ __('User Roles') }}
-        @endslot
-    @endcomponent
+    <X-breadcrumb :items="[
+        ['label' => __('Admin')],
+        ['label' => __('User Roles'), 'url' => route('admin.roles.index')],
+    ]"/>
 
     <div class="row">
         <div class="col-xl-12">

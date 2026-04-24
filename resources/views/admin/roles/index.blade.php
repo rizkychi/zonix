@@ -3,20 +3,16 @@
     {{ __('Roles') }}
 @endsection
 @section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
-            {{ __('Admin') }}
-        @endslot
-        @slot('title')
-            {{ __('Roles') }}
-        @endslot
-    @endcomponent
+    <x-breadcrumb :items="[
+        ['label' => __('Admin')],
+        ['label' => __('Roles'), 'url' => route('admin.roles.index')],
+    ]"/>
 
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">{{ __('Roles') }} {{ __('Manager') }}</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">{{ __('Roles Manager') }}</h4>
 
                     <div class="flex-shrink-0">
                         <x-button-icon el="a" href="{{ route('admin.roles.create') }}" variant="primary" icon="ri-add-line">

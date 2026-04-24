@@ -1,16 +1,16 @@
 @extends('layouts.master')
 @section('title')
-    {{ __('Roles') }}
+    @if (isset($role))
+        {{ __('Edit Role') }}
+    @else
+        {{ __('Create Role') }}
+    @endif
 @endsection
 @section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
-            {{ __('Admin') }}
-        @endslot
-        @slot('title')
-            {{ __('Roles') }}
-        @endslot
-    @endcomponent
+    <x-breadcrumb :items="[
+        ['label' => __('Admin')],
+        ['label' => __('Roles'), 'url' => route('admin.roles.index')],
+    ]"/>
 
     <div class="row">
         <div class="col-xl-12">
@@ -18,9 +18,9 @@
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">
                         @if (isset($role))
-                            {{ __('Edit') }} {{ __('Role') }}
+                            {{ __('Edit Role') }}
                         @else
-                            {{ __('Create') }} {{ __('Role') }}
+                            {{ __('Create Role') }}
                         @endif
                     </h4>
                 </div><!-- end card header -->

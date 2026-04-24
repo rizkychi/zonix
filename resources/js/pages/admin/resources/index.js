@@ -1,9 +1,6 @@
 export function init() {
     // Toggle active status
     $("#resources-table").on("click", ".toggle-active", function () {
-        const csrfToken = document
-            .querySelector('meta[name="csrf-token"]')
-            .getAttribute("content");
         var resourceId = $(this).data("id");
         var isActive = $(this).is(":checked");
         var $toggle = $(this);
@@ -13,8 +10,10 @@ export function init() {
             url: "/admin/resources/" + resourceId + "/toggle",
             method: "PATCH",
             data: {
-                _token: csrfToken,
                 is_active: isActive,
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
                 if (response.is_active) {
@@ -22,12 +21,13 @@ export function init() {
                 } else {
                     toast.error(response.message);
                 }
-                $toggle.prop("disabled", false); // Re-enable the toggle
             },
             error: function (xhr) {
-                $toggle.prop("disabled", false); // Re-enable the toggle
-                toast.error('An error occurred while updating the resource status.');
+                let response = xhr.responseJSON;
+                toast.error(response.message);
             },
+        }).always(function () {
+            $toggle.prop("disabled", false); // Ensure toggle is re-enabled in case of any outcome
         });
     });
 }

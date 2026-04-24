@@ -3,14 +3,10 @@
     {{ __('Resources') }}
 @endsection
 @section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
-            {{ __('Admin') }}
-        @endslot
-        @slot('title')
-            {{ __('Resources') }}
-        @endslot
-    @endcomponent
+    <x-breadcrumb :items="[
+        ['label' => __('Admin')],
+        ['label' => __('Resources'), 'url' => route('admin.resources.index')],
+    ]"/>
 
     @if (session('sync_result'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -22,7 +18,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">{{ __('Resources') }} {{ __('Manager') }}</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">{{ __('Resources Manager') }}</h4>
 
                     <div class="flex-shrink-0">
                         <form method="POST" action="{{ route('admin.resources.sync') }}">
