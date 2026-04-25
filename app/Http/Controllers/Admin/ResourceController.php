@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Resource;
 use App\Services\ResourceScanner;
 use Illuminate\Http\Request;
-use SweetAlert2\Laravel\Swal;
 use Yajra\DataTables\Facades\DataTables;
 
 class ResourceController extends Controller

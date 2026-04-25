@@ -3,10 +3,10 @@
     {{ __('User Roles') }}
 @endsection
 @section('content')
-    <X-breadcrumb :items="[
+    <x-breadcrumb :items="[
         ['label' => __('Admin')],
-        ['label' => __('User Roles'), 'url' => route('admin.roles.index')],
-    ]"/>
+        ['label' => __('User Roles'), 'url' => route('admin.user-roles.index')],
+    ]" />
 
     <div class="row">
         <div class="col-xl-12">
@@ -70,13 +70,14 @@
                     <button class="btn btn-success btn-load waves-effect waves-light" id="save-roles-btn" type="button">
                         <span class="d-flex align-items-center gap-2">
                             <span class="spinner-border flex-shrink-0" role="status" style="display: none;">
-                                <span class="visually-hidden">{{ __('Save Changes') }}</span>
+                                <span class="visually-hidden">{{ __('Saving...') }}</span>
                             </span>
                             <span class="flex-grow-1">
                                 {{ __('Save Changes') }}
                             </span>
                         </span>
                     </button>
+                </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

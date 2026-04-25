@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
-use SweetAlert2\Laravel\Swal;
 
 class RoleController extends Controller
 {
@@ -30,6 +29,12 @@ class RoleController extends Controller
                         $buttons .= zx_button_icon('#', false, 'bx bxs-trash', 'danger', __('Delete'));
                     }
                     return $buttons;
+                })
+                ->editColumn('permissions_count', function ($role) {
+                    if (in_array($role->name, ['super-admin'])) {
+                        return 'All';
+                    }
+                    return $role->permissions_count;
                 })
                 ->rawColumns(['actions'])
                 ->make(true);
@@ -71,6 +76,10 @@ class RoleController extends Controller
 
     public function editPermissions(Role $role)
     {
+        if (in_array($role->name, ['super-admin'])) {
+            return redirect()->route('admin.roles.index')->with('swal_custom_error', __('The super-admin role has all permissions by default and cannot be edited.'));
+        }
+
         $resources = Resource::orderBy('group')
             ->orderByRaw("
                 CASE controller_action
@@ -94,6 +103,10 @@ class RoleController extends Controller
 
     public function syncPermissions(Request $request, Role $role)
     {
+        if (in_array($role->name, ['super-admin'])) {
+            return redirect()->route('admin.roles.index')->with('swal_custom_error', __('The super-admin role has all permissions by default and cannot be edited.'));
+        }
+        
         $permissions = $request->input('permissions', []);
 
         // Validate that the provided permissions actually exist in the system
@@ -110,7 +123,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         if (in_array($role->name, ['super-admin'])) {
-            return redirect()->back()->with('swal_custom_error', __('The super-admin role cannot be deleted.'));
+            return redirect()->route('admin.roles.index')->with('swal_custom_error', __('The super-admin role cannot be deleted.'));
         }
 
         $role->delete();
