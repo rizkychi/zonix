@@ -25,7 +25,7 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
         @include('layouts.topbar')
-        @include('layouts.sidebar')
+        @include('components.sidebar')
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->

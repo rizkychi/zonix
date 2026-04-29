@@ -42,5 +42,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(RbacSeeder::class);
+        $this->call(MenuItemSeeder::class);
     }
 }

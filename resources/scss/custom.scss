@@ -6,6 +6,7 @@ Contact: support@themesbrand.com
 File: Custom Css File
 */
 
+// Custom styles for pagination and DataTables sorting icons
 .page-item:not(:first-child):not(:last-child) .page-link {
     border-radius: 0 !important;
 }
@@ -33,4 +34,18 @@ table.dataTable > thead .sorting::before, table.dataTable > thead .sorting_asc::
 
 table.dataTable > thead .sorting::after, table.dataTable > thead .sorting_asc::after, table.dataTable > thead .sorting_desc::after, table.dataTable > thead .sorting_asc_disabled::after, table.dataTable > thead .sorting_desc_disabled::after {
     top: 14px;
+}
+
+// Remove default Bootstrap nav link indicators
+.nav .nav-item::before,
+.nav .nav-link::before,
+.sidebar .nav-link::before {
+    display: none !important;
+    content: none !important;
+}
+.navbar-menu .navbar-nav .nav-sm {
+    padding-left: 1rem;
+}
+.navbar-menu .navbar-nav .nav-sm .nav-link {
+    padding: 0.55rem 2rem 0.55rem 1.5rem !important;
 }

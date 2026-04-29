@@ -12,6 +12,8 @@ import Waves from 'node-waves';
 import feather from 'feather-icons';
 import flatpickr from 'flatpickr';
 import Choices from 'choices.js';
+import select2 from 'select2';
+select2(window, jQuery);
 
 (function () {
     ("use strict");
@@ -2181,3 +2183,41 @@ if (mybutton) {
         document.documentElement.scrollTop = 0;
     }
 }
+
+
+// ********************* Show Spinner in Button js ************************/
+ 
+window.showSpinner = (btn, show = true) => {
+    const icon = btn.querySelector("i");
+    const spinner = '<div class="spinner-border spinner-border-sm text-light" role="status"></div>';
+    if (show) {
+        const riClass = Array.from(icon.classList).find(c =>
+            c.startsWith("ri-")
+        );
+        if (riClass) {
+            icon.dataset.riClass = riClass; // Store the original class in a data attribute
+            icon.classList.remove(riClass);
+        }
+
+        btn.disabled = true;
+        icon.innerHTML = spinner;
+    } else {
+        const riClass = icon.dataset.riClass;
+        if (riClass) {
+            icon.classList.add(riClass); // Restore the original class
+        }
+
+        btn.disabled = false;
+        icon.innerHTML = '';
+    }
+}
+
+// ********************* Select2 js ************************/
+$('.select2').each(function() {
+    const $this = $(this);
+    const modal = $this.closest('.modal');
+    $this.select2({
+        width: '100%',
+        dropdownParent: modal,
+    });
+});

@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 
 const confirmBtnClass = "btn btn-danger w-xs";
-const cancelBtnClass = "btn btn-light w-xs ms-2";
+const cancelBtnClass = "btn btn-light w-xs me-2";
 const primaryBtnClass = "btn btn-primary w-xs";
 
 // ─── Toast Mixin ──────────────────────────────────────────
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const title = btn.dataset.confirm ?? "Are you sure?";
         const text = btn.dataset.confirmText ?? "";
-        const confirm = btn.dataset.confirmOk ?? "Yes, delete it!";
+        const confirm = '<i class="ri-delete-bin-line me-1"></i>' + (btn.dataset.confirmOk ?? "Yes, delete it!");
         const cancel = btn.dataset.confirmCancel ?? "Cancel";
 
         const result = await Swal.fire({
@@ -144,6 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 cancelButton: cancelBtnClass,
             },
             buttonsStyling: false,
+            reverseButtons: true
         });
 
         if (!result.isConfirmed) return;

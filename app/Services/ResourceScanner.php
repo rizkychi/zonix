@@ -20,6 +20,7 @@ class ResourceScanner
         'password.',
         'verification.',
         'default-livewire.',
+        'generated::', // for closure routes
     ];
 
     protected array $skipExact = [

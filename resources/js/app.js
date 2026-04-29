@@ -14,7 +14,7 @@ import Choices from 'choices.js';
 import flatpickr from 'flatpickr';
 import Toastify from 'toastify-js';
 import Swal from 'sweetalert2';
-import Select2 from 'select2';
+import select2 from 'select2';
 import './plugin/lordicon.js';
 import './plugin/datatables.init.js';
 import { swal, toast } from './plugin/swal.init.js';
@@ -22,7 +22,6 @@ import './plugin/form-validation.init.js';
 
 // ── CSS Library Imports
 import 'toastify-js/src/toastify.css';
-import 'select2/dist/css/select2.min.css';
 
 // ── Expose to window (needed by inline scripts in Blade)
 window.bootstrap  = bootstrap;
@@ -33,9 +32,9 @@ window.Choices    = Choices;
 window.flatpickr  = flatpickr;
 window.Toastify   = Toastify;
 window.Swal       = Swal;
-window.Select2    = Select2;
 window.swal       = swal;
 window.toast      = toast;
+select2(window, jQuery);
 
 // ── Init
 Waves.init();
