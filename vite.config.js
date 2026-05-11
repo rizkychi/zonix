@@ -56,4 +56,9 @@ export default defineConfig({
             refresh: [...refreshPaths, "resources/views/**"],
         }),
     ],
+    server: {
+        watch: {
+            ignored: ['**/resources/lang/**']
+        },
+    },
 });

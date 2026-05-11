@@ -27,11 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     targets: -1,
                     width: "1%",
                     render: function (data) {
-                        return (
-                            '<div class="hstack gap-1">' +
-                            data +
-                            "</div>"
-                        );
+                        return '<div class="hstack gap-1">' + data + "</div>";
                     },
                 });
             }

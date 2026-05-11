@@ -2221,3 +2221,22 @@ $('.select2').each(function() {
         dropdownParent: modal,
     });
 });
+
+// ********************* Loading ************************/
+window.showLoading = (show = true) => {
+    const loadingModal = document.getElementById('loadingModal');
+    if (loadingModal) {
+        if (show) {
+            const modal = new bootstrap.Modal(loadingModal, {
+                backdrop: 'static',
+                keyboard: false,
+            });
+            modal.show();
+        } else {
+            const modalInstance = bootstrap.Modal.getInstance(loadingModal);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+        }
+    }
+}

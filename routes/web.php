@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ResourceController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,4 +51,12 @@ Route::prefix('admin')
         Route::delete('menu/{item}',                [MenuController::class, 'destroy'])->name('menu.destroy');
         Route::post('menu/action/reorder',          [MenuController::class, 'reorder'])->name('menu.reorder');
         Route::patch('menu/{item}/toggle',          [MenuController::class, 'toggle'])->name('menu.toggle');
+
+        // Translation management
+        Route::get('translations/',                 [TranslationController::class, 'index'])->name('translations.index');
+        Route::post('translations/scan-missing',    [TranslationController::class, 'scanMissing'])->name('translations.scan-missing');
+        Route::post('translations/translate',       [TranslationController::class, 'translate'])->name('translations.translate');
+        Route::post('translations/sort',            [TranslationController::class, 'sort'])->name('translations.sort');
+        Route::post('translations/add-locale',      [TranslationController::class, 'addLocale'])->name('translations.add-locale');
+        Route::post('translations/save-row',        [TranslationController::class, 'saveRow'])->name('translations.save-row');
     });

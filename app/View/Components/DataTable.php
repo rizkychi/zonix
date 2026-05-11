@@ -16,12 +16,15 @@ class DataTable extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($id, $ajax, $columns = 'datatable', $class = null)
+    public function __construct($id, $ajax, $columns = 'datatable', $class = null, $params = [])
     {
         $this->id = $id;
         $this->ajax = $ajax;
         $this->columns = $columns;
         $this->class = $class;
+        if (!empty($params)) {
+            $this->ajax .= '?' . http_build_query($params);
+        }
     }
 
     /**
