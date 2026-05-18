@@ -34,7 +34,7 @@ class LoginController extends Controller
             RateLimiter::hit($this->throttleKey($request), $this->decayMinutes * 60);
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'email' => __('Invalid credentials.'),
             ]);
         }
 
@@ -74,8 +74,7 @@ class LoginController extends Controller
         $seconds = RateLimiter::availableIn($this->throttleKey($request));
 
         throw ValidationException::withMessages([
-            'email' => __('auth.throttle',[
-                'seconds' => $seconds,
+            'email' => __('Too many login attempts. Please try again in :minutes minutes.',[
                 'minutes' => ceil($seconds / 60)
             ]),
         ])->status(429);

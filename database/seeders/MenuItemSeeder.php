@@ -25,7 +25,6 @@ class MenuItemSeeder extends Seeder
             'type' => 'item',
             'title' => 'Admin',
             'icon' => 'ri-shield-user-fill',
-            'permission' => 'admin.menu.index',
             'sort_order' => 10
         ]);
 
@@ -67,9 +66,52 @@ class MenuItemSeeder extends Seeder
                 'sort_order' => 14,
                 'parent_id' => $adminParent->id
             ],
+            [
+                'type' => 'item',
+                'title' => 'Translations',
+                'icon' => 'ri-translate',
+                'route' => 'admin.translations.index',
+                'permission' => 'admin.translations.index',
+                'sort_order' => 15,
+                'parent_id' => $adminParent->id
+            ]            
         );
 
         collect($adminItems)->each(function ($item) {
+            MenuItem::create($item);
+        });
+
+        // Settings
+        $settingsParent = MenuItem::create([
+            'type' => 'item',
+            'title' => 'Settings',
+            'icon' => 'ri-settings-3-line',
+            'sort_order' => 20,
+            'parent_id' => $adminParent->id
+        ]);
+
+        $settingsItems = array(
+            [
+                'type' => 'item',
+                'title' => 'General',
+                'icon' => 'ri-settings-line',
+                'route' => 'admin.settings.general',
+                'permission' => 'admin.settings.general',
+                'sort_order' => 21,
+                'parent_id' => $settingsParent->id
+            ],
+            [
+                'type' => 'item',
+                'title' => 'Mail',
+                'icon' => 'ri-mail-settings-line',
+                'route' => 'admin.settings.mail',
+                'permission' => 'admin.settings.mail',
+                'sort_order' => 22,
+                'parent_id' => $settingsParent->id
+            ]
+        );
+
+        collect($settingsItems)->each(function ($item) {
             MenuItem::create($item);
         });
     }

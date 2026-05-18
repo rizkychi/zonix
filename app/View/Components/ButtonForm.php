@@ -8,17 +8,18 @@ use Illuminate\View\Component;
 
 class ButtonForm extends Component
 {
-    public $form, $backUrl, $variant, $size, $icon;
+    public $form, $backUrl, $variant, $size, $icon, $enableBack;
     /**
      * Create a new component instance.
      */
-    public function __construct($form, $backUrl = null, $variant = 'success', $size = 'md', $icon = 'ri-save-2-fill')
+    public function __construct($form, $enableBack = true, $backUrl = null, $variant = 'success', $size = 'md', $icon = 'ri-save-2-fill')
     {
         $this->form = $form;
         $this->backUrl = $backUrl ?? url()->previous();
         $this->variant = $variant;
         $this->size = $size;
         $this->icon = $icon;
+        $this->enableBack = $enableBack;
     }
 
     /**

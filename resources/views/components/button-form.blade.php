@@ -1,7 +1,9 @@
 <div class="d-flex gap-2">
-    <a href="{{ $backUrl }}" class="btn btn-{{ $size }} btn-light waves-effect waves-light">
-        {{ __('Cancel') }}
-    </a>
+    @if ($enableBack)
+        <a href="{{ $backUrl }}" class="btn btn-{{ $size }} btn-light waves-effect waves-light">
+            {{ __('Cancel') }}
+        </a>
+    @endif
 
     <button type="submit" form="{{ $form }}"
     {{ $attributes->merge(['class' => 'btn btn-' . $size . ' btn-' . $variant . ' btn-label waves-effect waves-light']) }}>

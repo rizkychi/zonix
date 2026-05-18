@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ResourceController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 // Authentication Routes
@@ -59,4 +60,8 @@ Route::prefix('admin')
         Route::post('translations/sort',            [TranslationController::class, 'sort'])->name('translations.sort');
         Route::post('translations/add-locale',      [TranslationController::class, 'addLocale'])->name('translations.add-locale');
         Route::post('translations/save-row',        [TranslationController::class, 'saveRow'])->name('translations.save-row');
+
+        // Settings management
+        Route::get('settings/{section?}',              [SettingController::class, 'index'])->name('settings.index');
+        Route::put('settings/{section}',              [SettingController::class, 'update'])->name('settings.update');
     });
