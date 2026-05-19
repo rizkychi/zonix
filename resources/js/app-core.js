@@ -2216,10 +2216,16 @@ window.showSpinner = (btn, show = true) => {
 $('.select2').each(function() {
     const $this = $(this);
     const modal = $this.closest('.modal');
-    $this.select2({
-        width: '100%',
-        dropdownParent: modal,
-    });
+    if (modal.length) {
+        $this.select2({
+            width: '100%',
+            dropdownParent: modal,
+        });
+    } else {
+        $this.select2({
+            width: '100%',
+        });
+    }
 });
 
 // ********************* Loading ************************/

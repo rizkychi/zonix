@@ -9,6 +9,9 @@ return new class extends SettingsMigration
         $this->migrator->inGroup('general', function ($blueprint) {
             $blueprint->add('app_debug', true);
             $blueprint->add('site_name', 'Zonix');
+            $blueprint->add('site_description', 'Simple and powerful admin dashboard template built with Laravel and Bootstrap.');
+            $blueprint->add('site_footer', 'Designed and Developed by <a href="https://masrizky.com" target="_blank">Rizky Hidayatullah</a>');
+            $blueprint->add('site_copyright', '2026 © Zonix. All rights reserved.');
             $blueprint->add('site_logo', null);
             $blueprint->add('site_favicon', null);
             $blueprint->add('site_email', 'mail@masrizky.com');
@@ -17,7 +20,6 @@ return new class extends SettingsMigration
             $blueprint->add('locale', 'en');
             $blueprint->add('date_format', 'Y-m-d');
             $blueprint->add('time_format', 'H:i:s');
-            $blueprint->add('datetime_format', 'Y-m-d H:i:s');
             $blueprint->add('enable_registration', true);
             $blueprint->add('enable_email_verification', true);
             $blueprint->add('enable_recaptcha', false);

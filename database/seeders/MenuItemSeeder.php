@@ -74,44 +74,19 @@ class MenuItemSeeder extends Seeder
                 'permission' => 'admin.translations.index',
                 'sort_order' => 15,
                 'parent_id' => $adminParent->id
-            ]            
-        );
-
-        collect($adminItems)->each(function ($item) {
-            MenuItem::create($item);
-        });
-
-        // Settings
-        $settingsParent = MenuItem::create([
-            'type' => 'item',
-            'title' => 'Settings',
-            'icon' => 'ri-settings-3-line',
-            'sort_order' => 20,
-            'parent_id' => $adminParent->id
-        ]);
-
-        $settingsItems = array(
-            [
-                'type' => 'item',
-                'title' => 'General',
-                'icon' => 'ri-settings-line',
-                'route' => 'admin.settings.general',
-                'permission' => 'admin.settings.general',
-                'sort_order' => 21,
-                'parent_id' => $settingsParent->id
             ],
             [
                 'type' => 'item',
-                'title' => 'Mail',
-                'icon' => 'ri-mail-settings-line',
-                'route' => 'admin.settings.mail',
-                'permission' => 'admin.settings.mail',
-                'sort_order' => 22,
-                'parent_id' => $settingsParent->id
+                'title' => 'Settings',
+                'icon' => 'ri-settings-3-line',
+                'route' => 'admin.settings.index',
+                'permission' => 'admin.settings.index',
+                'sort_order' => 16,
+                'parent_id' => $adminParent->id
             ]
         );
 
-        collect($settingsItems)->each(function ($item) {
+        collect($adminItems)->each(function ($item) {
             MenuItem::create($item);
         });
     }

@@ -63,6 +63,9 @@ class SettingController extends Controller
     {
         $validated = $request->validate([
             'site_name' => 'required|string|max:255',
+            'site_description' => 'nullable|string|max:500',
+            'site_footer' => 'nullable|string|max:255',
+            'site_copyright' => 'nullable|string|max:255',
             'site_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'site_favicon' => 'nullable|image|mimes:ico,png|max:512',
             'site_email' => 'required|email|max:255',
@@ -71,7 +74,6 @@ class SettingController extends Controller
             'locale' => 'required|string',
             'date_format' => 'required|string',
             'time_format' => 'required|string',
-            'datetime_format' => 'required|string',
             'enable_registration' => 'boolean',
             'enable_email_verification' => 'boolean',
             'enable_recaptcha' => 'boolean',
@@ -79,16 +81,31 @@ class SettingController extends Controller
             'recaptcha_secret_key' => 'nullable|string|max:255',
             'enable_google_analytics' => 'boolean',
             'google_analytics_tracking_id' => 'nullable|string|max:255',
+            'meta_author' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:500',
+            'meta_keywords' => 'nullable|string|max:255',
         ]);
 
+        if ($request->hasFile('site_logo')) {
+            $logoPath = $request->file('site_logo')->store('public/logos');
+            $settings->site_logo = str_replace('public/', 'storage/', $logoPath);
+        }
+
+        if ($request->hasFile('site_favicon')) {
+            $faviconPath = $request->file('site_favicon')->store('public/favicons');
+            $settings->site_favicon = str_replace('public/', 'storage/', $faviconPath);
+        }
+
         $settings->site_name = $validated['site_name'];
+        $settings->site_description = $validated['site_description'];
+        $settings->site_footer = $validated['site_footer'];
+        $settings->site_copyright = $validated['site_copyright'];
         $settings->site_email = $validated['site_email'];
         $settings->maintenance_mode = $request->boolean('maintenance_mode');
         $settings->timezone = $validated['timezone'];
         $settings->locale = $validated['locale'];
         $settings->date_format = $validated['date_format'];
         $settings->time_format = $validated['time_format'];
-        $settings->datetime_format = $validated['datetime_format'];
         $settings->enable_registration = $request->boolean('enable_registration');
         $settings->enable_email_verification = $request->boolean('enable_email_verification');
         $settings->enable_recaptcha = $request->boolean('enable_recaptcha');
@@ -96,6 +113,9 @@ class SettingController extends Controller
         $settings->recaptcha_secret_key = $validated['recaptcha_secret_key'];
         $settings->enable_google_analytics = $request->boolean('enable_google_analytics');
         $settings->google_analytics_tracking_id = $validated['google_analytics_tracking_id'];
+        $settings->meta_author = $validated['meta_author'];
+        $settings->meta_description = $validated['meta_description'];
+        $settings->meta_keywords = $validated['meta_keywords'];
         $settings->save();
 
         return redirect()->back()->with('success', __('General settings updated successfully.'));

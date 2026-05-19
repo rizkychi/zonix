@@ -8,6 +8,9 @@ class GeneralSettings extends Settings
 {
     public bool    $app_debug                       = true;
     public string  $site_name                       = 'Zonix';
+    public ?string $site_description                = 'Simple and powerful admin dashboard template built with Laravel and Bootstrap.';
+    public ?string $site_footer                     = 'Designed and Developed by <a href="https://masrizky.com" target="_blank">Rizky Hidayatullah</a>';
+    public ?string $site_copyright                  = '2026 © Zonix. All rights reserved.';
     public ?string $site_logo                       = null;
     public ?string $site_favicon                    = null;
     public string  $site_email                      = 'mail@masrizky.com';
@@ -16,7 +19,6 @@ class GeneralSettings extends Settings
     public string  $locale                          = 'en';
     public string  $date_format                     = 'Y-m-d';
     public string  $time_format                     = 'H:i:s';
-    public string  $datetime_format                 = 'Y-m-d H:i:s';
     public bool    $enable_registration             = true;
     public bool    $enable_email_verification       = true;
     public bool    $enable_recaptcha                = false;

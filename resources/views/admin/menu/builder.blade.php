@@ -25,7 +25,7 @@
                 </div><!-- end card-body -->
 
                 {{-- Save bar --}}
-                <div id="save-bar" class="justify-content-between">
+                <div id="save-bar" class="card-footer d-flex align-items-center justify-content-between sticky-bottom">
                     <x-button-icon id="btn-create-item" icon="ri-add-line" variant="primary">
                         {{ __('Create Menu') }}
                     </x-button-icon>
@@ -235,19 +235,6 @@
 
         .handle:active {
             cursor: grabbing;
-        }
-
-        /* ── Save bar ─────────────────────────────────────────────────────────── */
-        #save-bar {
-            position: sticky;
-            bottom: 0;
-            z-index: 9;
-            background: var(--vz-card-bg);
-            border-top: 1px solid var(--vz-border-color);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            border-radius: 0 0 8px 8px;
         }
 
         /* ── Input group text for icon preview ────────────────────────────────── */

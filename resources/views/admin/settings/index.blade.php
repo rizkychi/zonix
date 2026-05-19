@@ -29,7 +29,7 @@
                         <div class="col-md-9">
                             <div class="tab-content" id="v-pills-tabContent">
                                 <form action="{{ route('admin.settings.update', $section) }}" method="POST"
-                                    id="settings-form" class="needs-validation" enctype="multipart/form-data" novalidate>
+                                    id="settings-form" enctype="multipart/form-data" novalidate>
                                     @csrf
                                     @method('PUT')
                                     @include("admin.settings._{$section}")
@@ -40,7 +40,7 @@
                     <!--end row-->
                 </div>
 
-                <div class="card-footer d-flex align-items-center justify-content-end">
+                <div class="card-footer d-flex align-items-center justify-content-end sticky-bottom">
                     <x-button-form form="settings-form" :enable-back="false">
                         {{ __('Save Changes') }}
                     </x-button-form>

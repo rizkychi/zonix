@@ -15,11 +15,14 @@ class Input extends Component
     public $placeholder;
     public $required;
     public $size;
+    public $class;
+    public $disabled;
+    public $readonly;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($type = 'text', $name = '', $label = '', $value = '', $placeholder = '', $required = false, $size = 'md')
+    public function __construct($type = 'text', $name = '', $label = '', $value = '', $placeholder = '', $required = false, $size = 'md', $class = '', $disabled = false, $readonly = false)
     {
         $this->type = $type;
         $this->name = $name;
@@ -28,6 +31,9 @@ class Input extends Component
         $this->placeholder = $placeholder;
         $this->required = $required;
         $this->size = $size;
+        $this->class = $class;
+        $this->disabled = $disabled;
+        $this->readonly = $readonly;
     }
 
     /**
