@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\ImageOptimizationService;
 use App\Settings\GeneralSettings;
 use App\Settings\MailSettings;
 use App\Settings\ApiSettings;
@@ -15,6 +16,10 @@ class SettingController extends Controller
         'mail' => 'Mail',
         'api' => 'API',
     ];
+
+    public function __construct(
+        protected ImageOptimizationService $imageService
+    ) {}
 
     public function index($section = 'general')
     {
@@ -86,40 +91,57 @@ class SettingController extends Controller
             'meta_keywords' => 'nullable|string|max:255',
         ]);
 
-        if ($request->hasFile('site_logo')) {
-            $logoPath = $request->file('site_logo')->store('public/logos');
-            $settings->site_logo = str_replace('public/', 'storage/', $logoPath);
-        }
+        try {
+            $settings->site_name = $validated['site_name'];
+            $settings->site_description = $validated['site_description'];
+            $settings->site_footer = $validated['site_footer'];
+            $settings->site_copyright = $validated['site_copyright'];
+            $settings->site_email = $validated['site_email'];
+            $settings->maintenance_mode = $request->boolean('maintenance_mode');
+            $settings->timezone = $validated['timezone'];
+            $settings->locale = $validated['locale'];
+            $settings->date_format = $validated['date_format'];
+            $settings->time_format = $validated['time_format'];
+            $settings->enable_registration = $request->boolean('enable_registration');
+            $settings->enable_email_verification = $request->boolean('enable_email_verification');
+            $settings->enable_recaptcha = $request->boolean('enable_recaptcha');
+            $settings->recaptcha_site_key = $validated['recaptcha_site_key'];
+            $settings->recaptcha_secret_key = $validated['recaptcha_secret_key'];
+            $settings->enable_google_analytics = $request->boolean('enable_google_analytics');
+            $settings->google_analytics_tracking_id = $validated['google_analytics_tracking_id'];
+            $settings->meta_author = $validated['meta_author'];
+            $settings->meta_description = $validated['meta_description'];
+            $settings->meta_keywords = $validated['meta_keywords'];
+            
+            if ($request->has('site_logo')) {
+                // delete old logo if exists
+                if ($settings->site_logo) {
+                    $this->imageService->delete($settings->site_logo);
+                }
+                $siteLogo = $this->imageService->upload(
+                    file: $request->file('site_logo'),
+                    folder: 'settings',
+                );
+                $settings->site_logo = $siteLogo['path'];
+            }
+            if ($request->has('site_favicon')) {
+                // delete old favicon if exists
+                if ($settings->site_favicon) {
+                    $this->imageService->delete($settings->site_favicon);
+                }
+                $siteFavicon = $this->imageService->upload(
+                    file: $request->file('site_favicon'),
+                    folder: 'settings',
+                );
+                $settings->site_favicon = $siteFavicon['path'];
+            }
 
-        if ($request->hasFile('site_favicon')) {
-            $faviconPath = $request->file('site_favicon')->store('public/favicons');
-            $settings->site_favicon = str_replace('public/', 'storage/', $faviconPath);
+            $settings->save();
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', __('An error occurred while updating general settings: ') . $th->getMessage());
         }
-
-        $settings->site_name = $validated['site_name'];
-        $settings->site_description = $validated['site_description'];
-        $settings->site_footer = $validated['site_footer'];
-        $settings->site_copyright = $validated['site_copyright'];
-        $settings->site_email = $validated['site_email'];
-        $settings->maintenance_mode = $request->boolean('maintenance_mode');
-        $settings->timezone = $validated['timezone'];
-        $settings->locale = $validated['locale'];
-        $settings->date_format = $validated['date_format'];
-        $settings->time_format = $validated['time_format'];
-        $settings->enable_registration = $request->boolean('enable_registration');
-        $settings->enable_email_verification = $request->boolean('enable_email_verification');
-        $settings->enable_recaptcha = $request->boolean('enable_recaptcha');
-        $settings->recaptcha_site_key = $validated['recaptcha_site_key'];
-        $settings->recaptcha_secret_key = $validated['recaptcha_secret_key'];
-        $settings->enable_google_analytics = $request->boolean('enable_google_analytics');
-        $settings->google_analytics_tracking_id = $validated['google_analytics_tracking_id'];
-        $settings->meta_author = $validated['meta_author'];
-        $settings->meta_description = $validated['meta_description'];
-        $settings->meta_keywords = $validated['meta_keywords'];
-        $settings->save();
 
         return redirect()->back()->with('success', __('General settings updated successfully.'));
-
     }
 
     private function updateMail(Request $request, MailSettings $settings)

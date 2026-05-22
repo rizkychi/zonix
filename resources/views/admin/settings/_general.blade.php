@@ -25,7 +25,7 @@
         <x-input name="site_logo" :label="__('Site Logo')" type="file" accept="image/*" />
         @if ($settings->site_logo)
             <div class="mt-2">
-                <img src="{{ asset('storage/' . $settings->site_logo) }}" alt="Site Logo" height="50">
+                <img src="{{ Storage::url($settings->site_logo) }}" alt="Site Logo" height="50">
             </div>
         @endif
     </div>
@@ -33,7 +33,7 @@
         <x-input name="site_favicon" :label="__('Site Favicon')" type="file" accept="image/*" />
         @if ($settings->site_favicon)
             <div class="mt-2">
-                <img src="{{ asset('storage/' . $settings->site_favicon) }}" alt="Site Favicon" height="32">
+                <img src="{{ Storage::url($settings->site_favicon) }}" alt="Site Favicon" height="50">
             </div>
         @endif
     </div>
